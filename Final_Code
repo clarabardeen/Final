@@ -216,7 +216,7 @@ print("x_3:", x_3)
 
 #create a dataframe so that it looks good and can be figured out LOL
 
-B12_values = pd.DataFrame(np.array([[-0.023551724137931034, 0.21753246753246755], [-0.029586206896551722, -0.016753246753246756], [-0.027241379310344822, -0.042240259740259745]]), columns = ['Nancys Kefir', 'Humm Kombucha'])
+B12_values = pd.DataFrame(np.array([[-0.023551724137931034, 0.21753246753246755, "The negative of the kefir means that there is no B12. Humm Kombucha has .217*10 nanomolar"], [-0.029586206896551722, -0.016753246753246756, "Both values are negative."], [-0.027241379310344822, -0.042240259740259745, "Both values are negative."]]), columns = ['Nancys Kefir', 'Humm Kombucha', 'Conclusions'])
 B12_values
 
 #this is in nanomolar! time to analyze. 
