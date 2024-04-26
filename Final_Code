@@ -25,6 +25,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 #originally, we did this code with sklearn, based on reddit advice..., but it was confusing so we re-did it with stuff taught in class!
 #first, we need to make our functions to even calculate linear regression and the r squared value
 #calculate linear regression, compute slope and intercept of linear regression line
@@ -88,13 +89,13 @@ X_Humm = data_Humm['X'].values
 y_Humm = data_Humm['Y'].values
 
 # Fit linear regression model for Humm
-slope_Humm, intercept_Humm = calculate_linear_regression(X_Humm, y_Humm)
+slope_Humm, intercept_Humm = linear_regression(X_Humm, y_Humm)
 
 # Predict y values using the linear regression model for Humm
 y_pred_Humm = slope_Humm * X_Humm + intercept_Humm
 
 # Calculate R-squared value for concentration
-r_squared_Humm = calculate_r_squared(y_Humm, y_pred_Humm)
+r_squared_Humm = r_is_squared(y_Humm, y_pred_Humm)
 
 # Plot the standard curve and linear regression line for Humm
 plt.figure(figsize=(8, 6))
