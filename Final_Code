@@ -219,4 +219,10 @@ print("x_3:", x_3)
 B12_values = pd.DataFrame(np.array([[-0.023551724137931034, 0.21753246753246755], [-0.029586206896551722, -0.016753246753246756], [-0.027241379310344822, -0.042240259740259745]]), columns = ['Nancys Kefir', 'Humm Kombucha'])
 B12_values
 
-#this is in micrograms! so we can compare easier. 
+#this is in nanomolar! time to analyze. 
+
+print("Based on the results calculated above the only corrinoid present is in Humm Kombucha.")
+print("Using the standard curve and solving for x, Humm Kombucha is found to have 0.217532 nM of corrinoid.")
+print("This is much lower than the reported contents of Humm Kombucha, which is approximately 200ug/100g.")
+print("Nancy's Kefir reported to have less than 0.1ug of B12, so the results are conclusive.")
+print("The exact contents of Humm Kombucha are worth looking into, to prevent possible B12 deficieny in thos who consume it.")
