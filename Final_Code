@@ -218,3 +218,5 @@ print("x_3:", x_3)
 
 B12_values = pd.DataFrame(np.array([[-0.023551724137931034, 0.21753246753246755], [-0.029586206896551722, -0.016753246753246756], [-0.027241379310344822, -0.042240259740259745]]), columns = ['Nancys Kefir', 'Humm Kombucha'])
 B12_values
+
+#this is in micrograms! so we can compare easier. 
