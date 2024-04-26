@@ -1,0 +1,220 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+#starts with plotting a basic standard curve to make sure I can do that lol
+
+data = pd.read_csv('Final.csv')
+
+X = data['X']
+Y = data['Y']
+
+#sns.scatterplot(data=data, X = 'B12 Concentration', Y = 'Absorbance'), seaborn did not work, got confused 
+# Plot the standard curve
+
+plt.figure(figsize=(8, 6))
+plt.plot(X, Y, marker='o', linestyle='-')
+plt.title('Standard Curve of Nancys Kefir, with no Error Plotted and Such')
+plt.xlabel('B12 Concentration')
+plt.ylabel('OD')
+plt.grid(True)
+plt.show()
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+#originally, we did this code with sklearn, based on reddit advice..., but it was confusing so we re-did it with stuff taught in class!
+#first, we need to make our functions to even calculate linear regression and the r squared value
+#calculate linear regression, compute slope and intercept of linear regression line
+def linear_regression(X, y): 
+    n = len(X)
+    sum_x = np.sum(X)
+    sum_y = np.sum(y)
+    sum_xy = np.sum(X * y)
+    sum_x_squared = np.sum(X ** 2)
+
+    slope = (n * sum_xy - sum_x * sum_y) / (n * sum_x_squared - sum_x ** 2)
+    intercept = (sum_y - slope * sum_x) / n
+
+    return slope, intercept
+
+def r_is_squared(y_true, y_pred): #make our predictions, calculated r squared value
+    mean_y_true = np.mean(y_true)
+    total_sum_of_squares = np.sum((y_true - mean_y_true) ** 2)
+    residual_sum_of_squares = np.sum((y_true - y_pred) ** 2)
+
+    r_squared = 1 - (residual_sum_of_squares / total_sum_of_squares)
+    return r_squared
+
+# using data from two food products, Nancy's Kefir which is "final" and Humm Kombucha
+data_NK = pd.read_csv('Final.csv')
+data_Humm = pd.read_csv('HUMMKOMB12.csv')
+
+# Standard Curve for NK 
+X_NK = data_NK['X'].values
+y_NK = data_NK['Y'].values
+
+# Fit linear regression model for NK
+slope_NK, intercept_NK = linear_regression(X_NK, y_NK)
+
+# Predict y values using the linear regression model for NK
+y_pred_NK = slope_NK * X_NK + intercept_NK
+
+# Calculate R-squared value for NK
+r_squared_NK = r_is_squared(y_NK, y_pred_NK)
+
+# Plot the standard curve and linear regression line for NK
+plt.figure(figsize=(8, 6))
+plt.scatter(X_NK, y_NK, color='blue', label='Data')
+plt.plot(X_NK, y_NK, color='red', label='Linear Regression')
+
+# Plot the equation and R-squared value for standard curve, consulted reddit for this part 
+equation_NK = f'y = {slope_NK:.2f}x + {intercept_NK:.2f}'
+r_squared_text_NK = f'R-squared = {r_squared_NK:.2f}'
+plt.text(0.1, 0.9, equation_NK, transform=plt.gca().transAxes)
+plt.text(0.1, 0.85, r_squared_text_NK, transform=plt.gca().transAxes)
+
+plt.title('Standard Curve of Nancys Kefir')
+plt.xlabel('B12 Concentration')
+plt.ylabel('OD')
+plt.legend(loc='lower right')
+plt.grid(True)
+plt.show()
+
+# now we do the same thing but for Humm kombucha 
+X_Humm = data_Humm['X'].values
+y_Humm = data_Humm['Y'].values
+
+# Fit linear regression model for Humm
+slope_Humm, intercept_Humm = calculate_linear_regression(X_Humm, y_Humm)
+
+# Predict y values using the linear regression model for Humm
+y_pred_Humm = slope_Humm * X_Humm + intercept_Humm
+
+# Calculate R-squared value for concentration
+r_squared_Humm = calculate_r_squared(y_Humm, y_pred_Humm)
+
+# Plot the standard curve and linear regression line for Humm
+plt.figure(figsize=(8, 6))
+plt.scatter(X_Humm, y_Humm, color='blue', label='Data')
+plt.plot(X_Humm, y_pred_Humm, color='red', label='Linear Regression')
+
+# Plot the equation and R-squared value for Humm
+equation_Humm = f'y = {slope_Humm:.2f}x + {intercept_Humm:.2f}'
+r_squared_text_Humm = f'R-squared = {r_squared_Humm:.2f}'
+plt.text(0.1, 0.9, equation_Humm, transform=plt.gca().transAxes)
+plt.text(0.1, 0.85, r_squared_text_Humm, transform=plt.gca().transAxes)
+
+plt.title('Standard Curve of Humm Kombucha')
+plt.xlabel('B12 Concentration')
+plt.ylabel('OD')
+plt.legend(loc='lower right')
+plt.grid(True)
+plt.show()
+
+# now we can try growth curves based off of the plate reader used in lab for Nancy's Kefir
+#unfortunately we only have terminal reads for Humm kombucha, so we can't see its growth
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# first is Nancy's kefir
+data = pd.read_csv('GrowthNK.csv')
+
+#time is in seconds, and growth is based on absorbance
+time_points = data['Time [s]']
+bacterial_growth = data['undilutedE']
+
+# plotting
+plt.plot(time_points, bacterial_growth, marker='o', linestyle='-')
+plt.title('Growth of Met E in undiluted Nancys Kefir')
+plt.xlabel('Time (seconds)')
+plt.ylabel('Bacterial Growth')
+plt.grid(True)
+plt.show()
+
+
+time_points = data['Time [s]']
+bacterial_growth = data['10.1E']
+
+# Plot the growth curve
+plt.plot(time_points, bacterial_growth, marker='o', linestyle='-')
+plt.title('Growth of Met E in 10^-1 Nancys Kefir')
+plt.xlabel('Time (seconds)')
+plt.ylabel('Bacterial Growth')
+plt.grid(True)
+plt.show()
+
+time_points = data['Time [s]']
+bacterial_growth = data['10.2E']
+
+# Plot the growth curve
+plt.plot(time_points, bacterial_growth, marker='o', linestyle='-')
+plt.title('Growth of Met E in 10^-2 Nancys Kefir')
+plt.xlabel('Time (seconds)')
+plt.ylabel('Bacterial Growth')
+plt.grid(True)
+plt.show()
+
+time_points = data['Time [s]']
+bacterial_growth = data['undilutedEH']
+
+
+# sometimes the plate reader was taken, so there were only final reads that have to be indexed through well names A1, B2, etc... 
+# this means no growth curve can be generated, but I can calculate the final calculated conc of corrinoid 
+
+# first, let's calculate corrinoid concentration for nancy's kefir
+# based on growth curves it is not looking too swell 
+
+import pandas as pd
+
+# Retrieve the values from row 124 for three different columns
+
+dfNK = pd.read_csv('GrowthNK.csv')
+y_1 = dfNK.loc[124, 'undilutedE']
+y_2 = dfNK.loc[124, '10.1E']
+y_3 = dfNK.loc[124, '10.2E']
+
+# Define the formula to calculate x
+def calculate_x(y):
+    return (y - 0.21) / 2.90
+
+# Calculate x for each column
+x_1 = calculate_x(y_1)
+x_2 = calculate_x(y_2)
+x_3 = calculate_x(y_3)
+
+print("x_1:", x_1)
+print("x_2:", x_2)
+print("x_3:", x_3)
+
+#x values are negative, therefore, there is no corrinoid present in nacny's kefir! their marketing is false... 
+
+# what about for the humm kombucha? It should be heavily supplemented
+
+import pandas as pd
+
+dfHK = pd.read_csv('HummKOMBOD.csv')
+y_1 = dfHK.loc[19, 'Final OD'] #undiluted
+y_2 = dfHK.loc[31, 'Final OD'] #10^-1
+y_3 = dfHK.loc[43, 'Final OD'] #10^-2
+
+# Define the formula to calculate x
+def calculate_x(y):
+    return (y - 0.26) / 3.08
+
+# Calculate x for each column
+x_1 = calculate_x(y_1)
+x_2 = calculate_x(y_2)
+x_3 = calculate_x(y_3)
+
+print("x_1:", x_1)
+print("x_2:", x_2)
+print("x_3:", x_3)
+
+#create a dataframe so that it looks good and can be figured out LOL
+
+B12_values = pd.DataFrame(np.array([[-0.023551724137931034, 0.21753246753246755], [-0.029586206896551722, -0.016753246753246756], [-0.027241379310344822, -0.042240259740259745]]), columns = ['Nancys Kefir', 'Humm Kombucha'])
+B12_values
